@@ -3,6 +3,6 @@
 ### Python Command:
 
 ```python
-# Retrieve and display all attributes of the book you created
-book = Book.objects.get(id=1)
-book
+# Retrieve the book with the title "1984"
+book = Book.objects.get(title="1984")
+print(book.title, book.author, book.publication_year)
