@@ -1,13 +1,15 @@
 from django.shortcuts import render
-from .models import Book
+from django.views.generic.detail import DetailView  # Ensure this line is present
+from .models import Author, Book, Library, Librarian
 
-def list_books(request):
-    books = Book.objects.all()
-    return render(request, 'relationship_app/list_books.html', {'books': books})
-from django.views.generic import DetailView
-from .models import Library
+# Example DetailView for a Book
+class BookDetailView(DetailView):
+    model = Book
+    template_name = 'relationship_app/book_detail.html'
 
-class LibraryDetailView(DetailView):
-    model = Library
-    template_name = 'relationship_app/library_detail.html'
-    context_object_name = 'library'
+# Example DetailView for an Author
+class AuthorDetailView(DetailView):
+    model = Author
+    template_name = 'relationship_app/author_detail.html'
+
+# Other views can be added below
