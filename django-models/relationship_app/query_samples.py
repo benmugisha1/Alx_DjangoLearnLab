@@ -9,11 +9,11 @@ for book in books_by_author:
 
 # List all books in a specific library
 library_name = "Central Library"
-library = Library.objects.get(name=library_name)  # Ensure this line is present
+library = Library.objects.get(name=library_name)
 books_in_library = library.books.all()
 for book in books_in_library:
     print(f"Library: {library.name}, Book: {book.title}")
 
 # Retrieve the librarian for a specific library
-librarian_for_library = library.librarian
+librarian_for_library = Librarian.objects.get(library=library)  # Ensure this line is present
 print(f"Librarian for {library.name}: {librarian_for_library.name}")
