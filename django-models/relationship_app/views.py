@@ -35,13 +35,17 @@ class CustomLoginView(LoginView):
 class CustomLogoutView(LogoutView):
     template_name = 'logout.html'
 
+
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('home')  # Replace 'home' with the appropriate view name
+            return redirect('home')  # Update 'home' to the name of your homepage view
     else:
         form = UserCreationForm()
+    
+    # Render the 'register.html' template
     return render(request, 'register.html', {'form': form})
+
