@@ -9,13 +9,19 @@ urlpatterns = [
 
 # relationship_app/urls.py
 
+
 from django.urls import path
-from .views import CustomLoginView, CustomLogoutView, register
+from django.contrib.auth.views import LoginView, LogoutView
+from . import views  # Assuming your custom registration view is in views.py
+
+
+# relationship_app/urls.py
 
 urlpatterns = [
-    path('login/', CustomLoginView.as_view(), name='login'),
-    path('logout/', CustomLogoutView.as_view(), name='logout'),
-    path('register/', register, name='register'),
+    path('login/', LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', LogoutView.as_view(template_name='logout.html'), name='logout'),
+    path('register/', views.register, name='register'),
     # Add other URL patterns as needed
 ]
+
 

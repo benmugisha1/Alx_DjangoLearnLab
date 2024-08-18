@@ -22,7 +22,7 @@ class LibraryDetailView(DetailView):
     context_object_name = 'library'
 
 
-# relationship_app/views.py
+
 
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, redirect
