@@ -42,8 +42,10 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('book/add/', views.add_book, name='add_book'),
-    path('book/edit/<int:pk>/', views.edit_book, name='edit_book'),
-    path('book/delete/<int:pk>/', views.delete_book, name='delete_book'),
-    # Add other URLs here if necessary
+    path('books/', views.list_books, name='list_books'),
+    path('book/add/', views.add_book, name='add_book'),  # URL pattern for adding a book
+    path('book/edit/<int:pk>/', views.edit_book, name='edit_book'),  # URL pattern for editing a book
+    path('book/delete/<int:pk>/', views.delete_book, name='delete_book'),  # URL pattern for deleting a book
+    # Add other URL patterns here if necessary
 ]
+
