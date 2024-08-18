@@ -13,3 +13,10 @@ from .models import Library
 def library_detail(request, pk):
     library = get_object_or_404(Library, pk=pk)  # Query to get a specific library by primary key
     return render(request, 'relationship_app/library_detail.html', {'library': library})
+from django.views.generic.detail import DetailView
+from .models import Library
+
+class LibraryDetailView(DetailView):
+    model = Library
+    template_name = 'relationship_app/library_detail.html'
+    context_object_name = 'library'
