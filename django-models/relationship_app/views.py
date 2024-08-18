@@ -47,7 +47,7 @@ def register(request):
         form = UserCreationForm()
     
     # Render the 'register.html' template
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'relationship_app/register.html', {'form': form})
 
 # relationship_app/views.py
 
