@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Librarian View</title>
+</head>
+<body>
+    <h1>Welcome, Librarian!</h1>
+    <p>This page is accessible only to users with the Librarian role.</p>
+    <ul>
+        <li><a href="{% url 'manage_books' %}">Manage Books</a></li>
+        <li><a href="{% url 'view_members' %}">View Members</a></li>
+        <li><a href="{% url 'manage_loans' %}">Manage Book Loans</a></li>
+    </ul>
+</body>
+</html>
