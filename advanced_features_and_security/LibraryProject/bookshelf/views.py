@@ -38,20 +38,10 @@ def delete_document(request, document_id):
         return redirect('book_list')
     return render(request, 'bookshelf/delete_document.html', {'document': document})
 
-from django.shortcuts import render
-from .forms import ExampleForm
+from django.http import HttpResponse
 
-def example_view(request):
-    if request.method == 'POST':
-        form = ExampleForm(request.POST)
-        if form.is_valid():
-            # Process the form data
-            title = form.cleaned_data['title']
-            author = form.cleaned_data['author']
-            publish_date = form.cleaned_data['publish_date']
-            # (e.g., save to the database)
-    else:
-        form = ExampleForm()
-    
-    return render(request, 'bookshelf/form_example.html', {'form': form})
+def my_view(request):
+    response = HttpResponse("Hello, world!")
+    response['Content-Security-Policy'] = "default-src 'self'; script-src 'self' https://trusted.cdn.com"
+    return response
 

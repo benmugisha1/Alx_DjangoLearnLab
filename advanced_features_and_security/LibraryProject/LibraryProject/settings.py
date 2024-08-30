@@ -54,9 +54,8 @@ MIDDLEWARE = [
 ]
 
 CSP_DEFAULT_SRC = ("'self'",)
-CSP_STYLE_SRC = ("'self'", 'https://stackpath.bootstrapcdn.com')
-CSP_SCRIPT_SRC = ("'self'", 'https://code.jquery.com')
-
+CSP_SCRIPT_SRC = ("'self'", 'https://trusted.cdn.com')
+CSP_STYLE_SRC = ("'self'", 'https://trusted.cdn.com')
 
 ROOT_URLCONF = 'LibraryProject.urls'
 

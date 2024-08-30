@@ -1,14 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Example Form</title>
-</head>
-<body>
-    <h2>Fill out the form</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
+<form method="post" action="{% url 'your_view_name' %}">
+    {% csrf_token %}
+    <!-- Form fields here -->
+    <input type="submit" value="Submit">
+</form>
