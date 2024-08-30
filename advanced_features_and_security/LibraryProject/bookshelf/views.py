@@ -39,16 +39,19 @@ def delete_document(request, document_id):
     return render(request, 'bookshelf/delete_document.html', {'document': document})
 
 from django.shortcuts import render
-from .models import Book
-from django.db.models import Q
+from .forms import ExampleForm
 
-# Securely handle a search view
-def search_books(request):
-    query = request.GET.get('q')
-    if query:
-        # Use ORM to prevent SQL injection
-        results = Book.objects.filter(Q(title__icontains=query) | Q(author__icontains=query))
+def example_view(request):
+    if request.method == 'POST':
+        form = ExampleForm(request.POST)
+        if form.is_valid():
+            # Process the form data
+            title = form.cleaned_data['title']
+            author = form.cleaned_data['author']
+            publish_date = form.cleaned_data['publish_date']
+            # (e.g., save to the database)
     else:
-        results = Book.objects.none()
-    return render(request, 'bookshelf/book_list.html', {'books': results})
+        form = ExampleForm()
+    
+    return render(request, 'bookshelf/form_example.html', {'form': form})
 
