@@ -38,10 +38,19 @@ def delete_document(request, document_id):
         return redirect('book_list')
     return render(request, 'bookshelf/delete_document.html', {'document': document})
 
-from django.http import HttpResponse
+# LibraryProject/bookshelf/views.py
+from django.shortcuts import render, redirect
+from .forms import ExampleForm  # Import the form
+from .models import Book  # Import the model if needed
 
-def my_view(request):
-    response = HttpResponse("Hello, world!")
-    response['Content-Security-Policy'] = "default-src 'self'; script-src 'self' https://trusted.cdn.com"
-    return response
-
+def example_view(request):
+    if request.method == 'POST':
+        form = ExampleForm(request.POST)
+        if form.is_valid():
+            # Process the form data
+            form.save()
+            return redirect('success_url')  # Replace with your success URL or view name
+    else:
+        form = ExampleForm()
+    
+    return render(request, 'bookshelf/form_example.html', {'form': form})
