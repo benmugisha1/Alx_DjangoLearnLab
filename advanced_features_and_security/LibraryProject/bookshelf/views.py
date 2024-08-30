@@ -17,7 +17,7 @@ def view_document(request, document_id):
 def create_document(request):
     if request.method == 'POST':
         # Handle document creation logic here
-        return redirect('document_list')
+        return redirect('book_list')
     return render(request, 'bookshelf/create_document.html')
 
 # Edit Document
@@ -26,7 +26,7 @@ def edit_document(request, document_id):
     document = get_object_or_404(Document, id=document_id)
     if request.method == 'POST':
         # Handle document editing logic here
-        return redirect('document_list')
+        return redirect('book_list')
     return render(request, 'bookshelf/edit_document.html', {'document': document})
 
 # Delete Document
@@ -35,5 +35,5 @@ def delete_document(request, document_id):
     document = get_object_or_404(Document, id=document_id)
     if request.method == 'POST':
         document.delete()
-        return redirect('document_list')
+        return redirect('book_list')
     return render(request, 'bookshelf/delete_document.html', {'document': document})
