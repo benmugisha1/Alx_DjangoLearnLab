@@ -13,3 +13,15 @@ urlpatterns = [
     path('admin/', admin.site.urls),        # Admin URL
     path('api/', include('api.urls')),       # Include the api app's URLs
 ]
+
+
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import BookViewSet
+
+router = DefaultRouter()
+router.register(r'books', BookViewSet)
+
+urlpatterns = [
+    path('', include(router.urls)),
+]
