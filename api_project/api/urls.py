@@ -7,9 +7,9 @@ urlpatterns = [
 
 
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include  # Import include function
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),  # Route API URLs to the api app
+    path('admin/', admin.site.urls),        # Admin URL
+    path('api/', include('api.urls')),       # Include the api app's URLs
 ]
