@@ -11,6 +11,14 @@ class Book(models.Model):
         return self.title
 
 
+class Meta:
+        permissions = [
+            ("can_view", "Can view documents"),
+            ("can_create", "Can create documents"),
+            ("can_edit", "Can edit documents"),
+            ("can_delete", "Can delete documents"),
+        ]
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
