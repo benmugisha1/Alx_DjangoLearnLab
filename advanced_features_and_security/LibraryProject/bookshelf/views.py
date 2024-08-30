@@ -37,3 +37,18 @@ def delete_document(request, document_id):
         document.delete()
         return redirect('book_list')
     return render(request, 'bookshelf/delete_document.html', {'document': document})
+
+from django.shortcuts import render
+from .models import Book
+from django.db.models import Q
+
+# Securely handle a search view
+def search_books(request):
+    query = request.GET.get('q')
+    if query:
+        # Use ORM to prevent SQL injection
+        results = Book.objects.filter(Q(title__icontains=query) | Q(author__icontains=query))
+    else:
+        results = Book.objects.none()
+    return render(request, 'bookshelf/book_list.html', {'books': results})
+

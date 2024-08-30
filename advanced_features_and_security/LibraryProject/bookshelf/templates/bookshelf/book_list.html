@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book List</title>
+</head>
+<body>
+    <h2>Book List</h2>
+    <form method="post" action="{% url 'add_book' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+    <!-- Add CSRF token to all forms -->
+</body>
+</html>
