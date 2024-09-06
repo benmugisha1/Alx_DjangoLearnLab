@@ -1,6 +1,7 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
-from rest_framework.filters import SearchFilter, OrderingFilter  # Ensure this import is included
+from rest_framework.filters import SearchFilter  # Ensure this import is included
+from rest_framework.filters import OrderingFilter
 from django_filters import rest_framework as filters  # Import for filtering
 
 from .models import Book
