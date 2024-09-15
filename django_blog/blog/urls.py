@@ -24,6 +24,7 @@ from .views import (
 urlpatterns = [
     path('search/', views.search, name='search'),
     path('tags/<str:tag>/', views.tagged, name='tagged'),
+    path('tags/<slug:tag_slug>/', views.PostByTagListView.as_view(), name='post_by_tag'),
     # Blog post URLs
     path('', PostListView.as_view(), name='post-list'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
