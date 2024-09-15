@@ -9,23 +9,28 @@ urlpatterns = [
     path('profile/edit/', views.edit_profile, name='edit_profile'),
 ]
 
-
 from django.urls import path
 from .views import (
     PostListView,
     PostDetailView,
     PostCreateView,
     PostUpdateView,
-    PostDeleteView
+    PostDeleteView,
+    CommentCreateView,
+    CommentUpdateView,
+    CommentDeleteView
 )
 
 urlpatterns = [
+    # Blog post URLs
     path('', PostListView.as_view(), name='post-list'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
     path('post/new/', PostCreateView.as_view(), name='post-create'),
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
-    path('post/<int:post_id>/comments/new/', views.add_comment, name='add-comment'),
-    path('comment/<int:comment_id>/edit/', views.edit_comment, name='edit-comment'),
-    path('comment/<int:comment_id>/delete/', views.delete_comment, name='delete-comment'),
+
+    # Comment URLs
+    path('post/<int:pk>/comments/new/', CommentCreateView.as_view(), name='add-comment'),  # Add new comment
+    path('comment/<int:pk>/edit/', CommentUpdateView.as_view(), name='edit-comment'),      # Edit comment
+    path('comment/<int:pk>/delete/', CommentDeleteView.as_view(), name='delete-comment'),  # Delete comment
 ]
