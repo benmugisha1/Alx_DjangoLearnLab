@@ -1,0 +1,8 @@
+<h2>All Posts</h2>
+<ul>
+    {% for post in posts %}
+        <li>
+            <a href="{% url 'post-detail' post.id %}">{{ post.title }}</a> - {{ post.published_date }}
+        </li>
+    {% endfor %}
+</ul>
