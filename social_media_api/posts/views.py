@@ -45,32 +45,50 @@ class FeedView(APIView):
         posts = Post.objects.filter(author__in=following_users).order_by('-created_at')
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
-
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, permissions
 from rest_framework.response import Response
-from .models import Post
+from .models import Post, Like
+from notifications.models import Notification
+from django.contrib.contenttypes.models import ContentType
 
-# Example: Detail view for a Post
-class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Post.objects.all()
+# Base class to handle post actions
+class BasePostView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
+    model_class = Post
 
-    def get(self, request, pk):
-        # Correct usage of get_object_or_404
-        post = get_object_or_404(Post, pk=pk)
-        return Response({
-            "title": post.title,
-            "content": post.content,
-            "author": post.author.username
-        })
+    def get_post(self, pk):
+        # Fetch the post using get_object_or_404 from the model class
+        return get_object_or_404(self.model_class, pk=pk)
 
-# Example: Like a Post
-class LikePostView(generics.GenericAPIView):
-    permission_classes = [permissions.IsAuthenticated]
 
+class LikePostView(BasePostView):
     def post(self, request, pk):
-        # Fetch post with get_object_or_404 by primary key
-        post = get_object_or_404(Post, pk=pk)
-        # Process like logic here...
+        post = self.get_post(pk)
+        # Prevent duplicate likes by checking if the like already exists
+        like, created = Like.objects.get_or_create(user=request.user, post=post)
+        if not created:
+            return Response({"message": "You already liked this post"}, status=400)
+        
+        # Create a notification
+        Notification.objects.create(
+            recipient=post.author,
+            actor=request.user,
+            verb='liked your post',
+            target_ct=ContentType.objects.get_for_model(Post),
+            target_id=post.id
+        )
+        
         return Response({"message": "Post liked"}, status=200)
+
+
+class UnlikePostView(BasePostView):
+    def post(self, request, pk):
+        post = self.get_post(pk)
+        like = Like.objects.filter(user=request.user, post=post).first()
+
+        if like:
+            like.delete()
+            return Response({"message": "Post unliked"}, status=200)
+        else:
+            return Response({"message": "You haven't liked this post yet"}, status=400)
