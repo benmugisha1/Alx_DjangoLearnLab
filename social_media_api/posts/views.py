@@ -92,3 +92,20 @@ class UnlikePostView(BasePostView):
             return Response({"message": "Post unliked"}, status=200)
         else:
             return Response({"message": "You haven't liked this post yet"}, status=400)
+
+from django.shortcuts import get_object_or_404  # Correct import
+from rest_framework import generics, permissions
+from rest_framework.response import Response
+from .models import Post, Like
+from notifications.models import Notification
+from django.contrib.contenttypes.models import ContentType
+
+# Example View to handle getting a Post object
+class PostDetailView(generics.RetrieveAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Post.objects.all()
+
+    def get(self, request, pk):
+        # Correctly use get_object_or_404 to retrieve the post
+        post = get_object_or_404(Post, pk=pk)
+        return Response({"post": post.title, "content": post.content}, status=200)
