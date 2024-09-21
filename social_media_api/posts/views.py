@@ -56,7 +56,8 @@ class LikePostView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, post_id):
-        post = get_object_or_404(Post, id=post_id)  # Use post_id to fetch the post
+        # Correct usage of get_object_or_404
+        post = get_object_or_404(Post, id=post_id)
         Like.objects.get_or_create(user=request.user, post=post)
 
         # Create a notification
@@ -74,8 +75,8 @@ class UnlikePostView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, post_id):
-        post = get_object_or_404(Post, id=post_id)  # Use post_id to fetch the post
+        # Correct usage of get_object_or_404
+        post = get_object_or_404(Post, id=post_id)
         Like.objects.filter(user=request.user, post=post).delete()
         return Response({"message": "Post unliked"}, status=200)
-
 
