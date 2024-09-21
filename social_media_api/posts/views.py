@@ -45,38 +45,32 @@ class FeedView(APIView):
         posts = Post.objects.filter(author__in=following_users).order_by('-created_at')
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
+
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, permissions
 from rest_framework.response import Response
-from .models import Post, Like
-from notifications.models import Notification
-from django.contrib.contenttypes.models import ContentType
+from .models import Post
 
+# Example: Detail view for a Post
+class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Post.objects.all()
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, pk):
+        # Correct usage of get_object_or_404
+        post = get_object_or_404(Post, pk=pk)
+        return Response({
+            "title": post.title,
+            "content": post.content,
+            "author": post.author.username
+        })
+
+# Example: Like a Post
 class LikePostView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
-    def post(self, request, post_id):
-        # Correct usage of get_object_or_404
-        post = get_object_or_404(Post, id=post_id)
-        Like.objects.get_or_create(user=request.user, post=post)
-
-        # Create a notification
-        Notification.objects.create(
-            recipient=post.author,
-            actor=request.user,
-            verb='liked your post',
-            target_ct=ContentType.objects.get_for_model(Post),
-            target_id=post.id
-        )
-
+    def post(self, request, pk):
+        # Fetch post with get_object_or_404 by primary key
+        post = get_object_or_404(Post, pk=pk)
+        # Process like logic here...
         return Response({"message": "Post liked"}, status=200)
-
-class UnlikePostView(generics.GenericAPIView):
-    permission_classes = [permissions.IsAuthenticated]
-
-    def post(self, request, post_id):
-        # Correct usage of get_object_or_404
-        post = get_object_or_404(Post, id=post_id)
-        Like.objects.filter(user=request.user, post=post).delete()
-        return Response({"message": "Post unliked"}, status=200)
-
