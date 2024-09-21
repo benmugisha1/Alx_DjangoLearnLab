@@ -29,11 +29,11 @@ from django.urls import path
 from .views import FollowUserView, UnfollowUserView
 
 urlpatterns = [
-    # Other URL patterns
+    # Other URL patterns can be added here
 
     # Route for following a user
-    path('follow/<int:pk>/', FollowUserView.as_view(), name='follow_user'),
+    path('follow/<int:user_id>/', FollowUserView.as_view(), name='follow_user'),
 
     # Route for unfollowing a user
-    path('unfollow/<int:pk>/', UnfollowUserView.as_view(), name='unfollow_user'),
+    path('unfollow/<int:user_id>/', UnfollowUserView.as_view(), name='unfollow_user'),
 ]
