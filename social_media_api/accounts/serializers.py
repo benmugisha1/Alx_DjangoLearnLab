@@ -6,7 +6,7 @@ from rest_framework.authtoken.models import Token
 User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
-    # Explicitly defining password as a write-only CharField to handle password creation
+    # Explicitly define password as a CharField and set it to write_only
     password = serializers.CharField(write_only=True)
 
     class Meta:
@@ -24,3 +24,8 @@ class UserSerializer(serializers.ModelSerializer):
         # Create a token for the newly registered user
         Token.objects.create(user=user)
         return user
+
+class LoginSerializer(serializers.Serializer):
+    # LoginSerializer to handle user login with username and password
+    username = serializers.CharField()
+    password = serializers.CharField(write_only=True)
