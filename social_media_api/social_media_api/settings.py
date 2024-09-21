@@ -145,3 +145,7 @@ X_FRAME_OPTIONS = 'DENY'
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_SSL_REDIRECT = True  # Only enable this if you're using HTTPS
 
+import os
+
+PORT = os.getenv('PORT', '8000')  # Default to 8000 if PORT is not set
+
