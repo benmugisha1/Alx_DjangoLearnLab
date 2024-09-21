@@ -132,10 +132,16 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
 }
 ALLOWED_HOSTS = ['your_domain.com', 'your_ip_address']
-DEBUG='False'
+DEBUG = False
+
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
+
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_SSL_REDIRECT = True  # Only enable this if you're using HTTPS
 
