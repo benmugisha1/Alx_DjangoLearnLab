@@ -24,3 +24,16 @@ urlpatterns = [
     path('users/<int:pk>/follow/', FollowUserView.as_view(), name='follow_user'),
     path('users/<int:pk>/unfollow/', UnfollowUserView.as_view(), name='unfollow_user'),
 ]
+
+from django.urls import path
+from .views import FollowUserView, UnfollowUserView
+
+urlpatterns = [
+    # Other URL patterns
+
+    # Route for following a user
+    path('follow/<int:pk>/', FollowUserView.as_view(), name='follow_user'),
+
+    # Route for unfollowing a user
+    path('unfollow/<int:pk>/', UnfollowUserView.as_view(), name='unfollow_user'),
+]
